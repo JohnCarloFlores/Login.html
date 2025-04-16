@@ -139,30 +139,35 @@
 
       <button type="submit">Log In</button>
     </form>
-    <a href="Signup.html" class="link">Don't have an account? Sign Up</a>
+    <a href="signup.html" class="link">Don't have an account? Sign Up</a>
   </div>
-<script>
-  document.getElementById('togglePassword').addEventListener('change', function () {
-    const passwordInput = document.getElementById('password');
-    passwordInput.type = this.checked ? 'text' : 'password';
-  });
 
-  document.getElementById('loginForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
+  <script src="user.js"></script>
+  <script>
+    document.getElementById('togglePassword').addEventListener('change', function () {
+      const passwordInput = document.getElementById('password');
+      passwordInput.type = this.checked ? 'text' : 'password';
+    });
 
-    const users = JSON.parse(localStorage.getItem('users')) || [];
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
 
-    const foundUser = users.find(user => user.username === username && user.password === password);
+      const foundUser = users.find(user => user.username === username && user.password === password);
 
-    if (foundUser) {
-      alert('Login successful!');
-      window.location.href = 'dashboard.html'; // Redirect after login
-    } else {
-      alert('Login failed: Invalid username or password.');
-    }
-  });
-</script>
+      if (foundUser) {
+        alert('Login successful!');
+        sessionStorage.setItem("loggedInUser", foundUser.username);
+        if (foundUser.username === "Admin" && foundUser.password === "Admin2025") {
+          window.location.href = "dashboard.html";
+        } else {
+          window.location.href = "user.html";
+        }
+      } else {
+        alert('Login failed: Invalid username or password.');
+      }
+    });
+  </script>
 </body>
 </html>
