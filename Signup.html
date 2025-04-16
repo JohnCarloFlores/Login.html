@@ -130,10 +130,11 @@
 
       <button type="submit">Sign Up</button>
     </form>
-    <a href="Login.html" class="link">Already have an account? Log In</a>
+    <a href="index.html" class="link">Already have an account? Log In</a>
   </div>
 
   <script>
+    // Show/hide password
     document.getElementById('togglePassword').addEventListener('change', function () {
       const newPassword = document.getElementById('newPassword');
       const confirmPassword = document.getElementById('confirmPassword');
@@ -142,6 +143,7 @@
       confirmPassword.type = type;
     });
 
+    // Signup form logic
     document.getElementById('signupForm').addEventListener('submit', function (e) {
       e.preventDefault();
 
@@ -155,9 +157,11 @@
         return;
       }
 
-      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      const users = JSON.parse(localStorage.getItem('users')) || [];
 
-      if (users.some(user => user.username === username)) {
+      const userExists = users.some(user => user.username === username);
+
+      if (userExists) {
         alert('Username already exists. Please choose another one.');
         return;
       }
@@ -166,7 +170,7 @@
       localStorage.setItem('users', JSON.stringify(users));
 
       alert('Account created successfully!');
-      window.location.href = 'Login.html';
+      window.location.href = 'index.html'; // Redirect to login
     });
   </script>
 </body>
